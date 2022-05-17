@@ -17,7 +17,6 @@ contract ProxyRegistry {
 /**
  * @title Mint InCreation collection
  * @notice Contract in creation
- * TO DO / REFACTO PUBLIC - PRIVATE - IMMUTABLE
  */
 
 contract Project is ERC721A, VRFConsumerBaseV2, Ownable {
@@ -31,9 +30,9 @@ contract Project is ERC721A, VRFConsumerBaseV2, Ownable {
 
     VRFCoordinatorV2Interface COORDINATOR;
     uint64 s_subscriptionId;
-    address vrfCoordinator = 0x6168499c0cFfCaCD319c818142124B7A15E857ab;
+    address vrfCoordinator = 0x271682DEB8C4E0901D1a1550aD2e64D568E69909; 
     bytes32 keyHash =
-        0xd89b2bf150e3b9e13446986e571fb9cab24b13cea0a43ea20a6049a85cc807cc;
+        0xff8dedfbfa60af186cf3c830acbc32c05aae823045ae5ea7da1e45fbfaba4f92; 
     uint32 callbackGasLimit = 100000;
     uint16 requestConfirmations = 3;
     uint32 numWords = 1;
@@ -252,7 +251,7 @@ contract Project is ERC721A, VRFConsumerBaseV2, Ownable {
     /**
      * @dev Change the contract to public step`
      */
-    function setpublicStep() external onlyOwner {
+    function setPublicStep() external onlyOwner {
         publicStep = true;
     }
 
@@ -300,9 +299,10 @@ contract Project is ERC721A, VRFConsumerBaseV2, Ownable {
     }
 
     /**
-     * @dev Allow public burn
+     * @dev Decrease the supply
      */
     function updateMaxSupply(uint256 _newSupply) external onlyOwner {
+        require(_newSupply < maxSupply, "You try to increase the suppply. Decrease only is authorized")
         maxSupply = _newSupply;
     }
 
